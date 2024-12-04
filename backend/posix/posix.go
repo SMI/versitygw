@@ -4067,6 +4067,11 @@ func (p *Posix) ListBucketsAndOwners(ctx context.Context) (buckets []s3response.
 			continue
 		}
 
+		if containsprefix(entry.Name(), p.skipprefix) {
+			// skip directories that match the skip prefix
+			continue
+		}
+
 		fi, err := entry.Info()
 		if err != nil {
 			continue
